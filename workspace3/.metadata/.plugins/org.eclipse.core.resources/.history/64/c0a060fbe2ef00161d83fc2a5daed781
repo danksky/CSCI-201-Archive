@@ -1,0 +1,21 @@
+package DOM;
+
+public class Event {
+	public String action, movie, rating;
+
+	public Event() {}
+	
+	public Event(String a, String m, String r)
+	{
+		action = a;
+		movie = m;
+		rating = r;
+	}
+	
+	public String toString() {
+		String star = this.getClass().getResource("star21.png").toString();
+		String thumbsUp = this.getClass().getResource("thumbs-u-right.png").toString()
+		String firstIconImgSrc = "", lastIconImgSrc = "";
+		return firstIconImgSrc + " " + action + " " + movie + " " + rating + " " + lastIconImgSrc;
+	}
+}

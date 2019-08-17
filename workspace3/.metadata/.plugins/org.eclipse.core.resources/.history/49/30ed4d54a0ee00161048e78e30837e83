@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Cinemate: Profile</title>
+<link rel="stylesheet" type="text/css" href="standard.css">
+</head>
+<body>
+	<div class="header">
+		<h1>Cinemate</h1>
+		<p class="sub-header">Logged in! What would you like to do?</p>
+	</div>
+	<div class="main">
+		<div class="profile-image-box">
+			<img class="profile-image" src="<%=image-src%>"></img>
+			<h2></h2>
+			<h4>@<%=username%></h4>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="col-1">asdf</div>
+		<div class="col-2">asdf</div>
+	</div>
+</body>
+</html>

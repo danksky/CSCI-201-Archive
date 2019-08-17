@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.sound.sampled.Mixer"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.LineListener"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.AudioInputStream"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.AudioFormat"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.AudioSystem"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.DataLine"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.Clip"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.UnsupportedAudioFileException"/>
+<fullyQualifiedTypeName name="javax.sound.sampled.LineUnavailableException"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+</qualifiedTypeNameHistroy>

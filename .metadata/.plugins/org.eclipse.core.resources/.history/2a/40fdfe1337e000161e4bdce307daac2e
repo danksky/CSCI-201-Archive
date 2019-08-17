@@ -1,0 +1,231 @@
+package DOM;
+
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+import java.io.*;
+
+public class DOMParser {
+	public String[] genres;
+	public String[] actions;
+	public Movie[] movies; 
+	public User[] users;
+	
+	public static File inputFile;
+	public static DocumentBuilderFactory factory;
+	public static DocumentBuilder builder;
+	public static StringBuilder xmlStringBuilder;
+	public static Document doc;
+	public static Element root;
+	public static NodeList genreNodeList; 
+	public static NodeList actionNodeList;
+	public static NodeList movieNodeList;
+	public static NodeList userNodeList;
+	
+	public DOMParser() throws ParserConfigurationException, SAXException, IOException
+	{
+		// Boilerplate XML parsing code from https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
+		inputFile = new File("a1testfile");
+		factory = DocumentBuilderFactory.newInstance();
+		builder = factory.newDocumentBuilder();
+		xmlStringBuilder = new StringBuilder();
+		xmlStringBuilder.append("<?xml version=\"1.0\"?> <class> </class>");
+		doc = builder.parse(inputFile);
+		root = doc.getDocumentElement();
+		genreNodeList = doc.getElementsByTagName("genres");
+		actionNodeList = doc.getElementsByTagName("actions");
+		movieNodeList = doc.getElementsByTagName("movies");
+		userNodeList = doc.getElementsByTagName("users");
+	}
+	
+	public static void printValues() {
+		System.out.println("Root element: "+ root.getNodeName());
+		
+		Node genreNodeListNode = genreNodeList.item(0);
+		Node actionNodeListNode = actionNodeList.item(0);
+		Node movieNodeListNode = movieNodeList.item(0);
+		Node userNodeListNode = userNodeList.item(0);
+		
+		if (genreNodeListNode.getNodeType() == Node.ELEMENT_NODE && 
+				actionNodeListNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element gWrapperElement = (Element) genreNodeListNode;
+			Element aWrapperElement = (Element) actionNodeListNode;
+			Element mWrapperElement = (Element) movieNodeListNode;
+			Element uWrapperElement = (Element) userNodeListNode;
+			NodeList genreList = gWrapperElement.getElementsByTagName("genre");
+			NodeList actionList = aWrapperElement.getElementsByTagName("action");
+			NodeList movieList = mWrapperElement.getElementsByTagName("movie");
+			NodeList userList = uWrapperElement.getElementsByTagName("user");
+			Node genre, action;
+
+			for (int i = 0; i < genreList.getLength(); i++)
+			{
+				genre = genreList.item(i);
+				System.out.println(genre.getTextContent());
+			}
+			for (int i = 0; i < actionList.getLength(); i++)
+			{
+				action = actionList.item(i);
+				System.out.println(action.getTextContent());
+			}
+			for (int i = 0; i < movieList.getLength(); i++)
+			{
+				Node m = movieList.item(i);
+				if (m.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Element mElement = (Element) m;
+					NodeList movieWritersNL = mElement.getElementsByTagName("writer");
+					NodeList movieActorsNL = mElement.getElementsByTagName("actor");
+					String[] writers = new String[movieWritersNL.getLength()];
+					String[] actors = new String[movieActorsNL.getLength()];
+					for (int j = 0; j < movieWritersNL.getLength(); j++) // this is to populate the writers array
+						System.out.println(movieWritersNL.item(j).getTextContent());
+					for (int j = 0; j < movieActorsNL.getLength(); j++)
+						System.out.println(movieActorsNL.item(j).getTextContent());
+					System.out.println(mElement.getElementsByTagName("title").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("director").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("genre").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("year").item(0).getTextContent()); 
+					System.out.println(mElement.getElementsByTagName("description").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("rating").item(0).getTextContent());
+				}				
+			}
+			for (int i = 0; i < userList.getLength(); i++)
+			{
+				Node u = userList.item(i);
+				if (u.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Element uElement = (Element) u;
+					System.out.println(uElement.getElementsByTagName("fname").item(0).getTextContent() 
+							+ " " + uElement.getElementsByTagName("lname").item(0).getTextContent());
+					try {
+						NodeList feedNL = ((Element) uElement.getElementsByTagName("feed").item(0))
+								.getElementsByTagName("event");
+						NodeList followingNL = ((Element) uElement.getElementsByTagName("following").item(0))
+								.getElementsByTagName("username");
+						for (int j = 0; j < feedNL.getLength(); j++) // this is to populate the Following array
+						{
+							if (feedNL.item(j).getNodeType() == Node.ELEMENT_NODE) {
+								Element eElement = (Element) feedNL.item(j);
+								System.out.println(eElement.getElementsByTagName("action").item(0).getTextContent());
+								System.out.println(eElement.getElementsByTagName("movie").item(0).getTextContent());
+								System.out.println(eElement.getElementsByTagName("rating").item(0).getTextContent());
+							}
+						}
+						for (int j = 0; j < followingNL.getLength(); j++) // this is to populate the Following array
+						{
+							System.out.println(followingNL.item(j).getTextContent());
+						}
+					} catch (NullPointerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public void instantiateValues() {
+		Node genreNodeListNode = genreNodeList.item(0);
+		Node actionNodeListNode = actionNodeList.item(0);
+		Node movieNodeListNode = movieNodeList.item(0);
+		Node userNodeListNode = userNodeList.item(0);
+		
+		if (genreNodeListNode.getNodeType() == Node.ELEMENT_NODE && 
+				actionNodeListNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element gWrapperElement = (Element) genreNodeListNode;
+			Element aWrapperElement = (Element) actionNodeListNode;
+			Element mWrapperElement = (Element) movieNodeListNode;
+			Element uWrapperElement = (Element) userNodeListNode;
+			NodeList genreList = gWrapperElement.getElementsByTagName("genre");
+			NodeList actionList = aWrapperElement.getElementsByTagName("action");
+			NodeList movieList = mWrapperElement.getElementsByTagName("movie");
+			NodeList userList = uWrapperElement.getElementsByTagName("user");
+			
+			genres = new String[genreList.getLength()];
+			actions = new String[actionList.getLength()];
+			movies = new Movie[movieList.getLength()];
+			users = new User[userList.getLength()];
+			
+			for (int i = 0; i < genreList.getLength(); i++)
+			{
+				genres[i] = genreList.item(i).getTextContent();
+			}
+			for (int i = 0; i < actionList.getLength(); i++)
+			{
+				actions[i] = genreList.item(i).getTextContent();
+			}
+			for (int i = 0; i < movieList.getLength(); i++)
+			{
+				Node m = movieList.item(i);
+				if (m.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Element mElement = (Element) m;
+					NodeList movieWritersNL = mElement.getElementsByTagName("writer");
+					NodeList movieActorsNL = mElement.getElementsByTagName("actor");
+					String[] writers = new String[movieWritersNL.getLength()];
+					String[] actors = new String[movieActorsNL.getLength()];
+					for (int j = 0; j < movieWritersNL.getLength(); j++) // this is to populate the writers array
+						writers[j] = movieWritersNL.item(j).getTextContent();
+					for (int j = 0; j < movieActorsNL.getLength(); j++)
+						actors[j] = movieActorsNL.item(j).getTextContent();
+					movies[i] = new Movie(
+							mElement.getElementsByTagName("title").item(0).getTextContent(),
+							mElement.getElementsByTagName("director").item(0).getTextContent(),
+							mElement.getElementsByTagName("genre").item(0).getTextContent(),
+							mElement.getElementsByTagName("year").item(0).getTextContent(), 
+							mElement.getElementsByTagName("description").item(0).getTextContent(), 
+							mElement.getElementsByTagName("rating").item(0).getTextContent(), 
+							writers, 
+							actors);
+				}
+			}
+			
+			for (int i = 0; i < userList.getLength(); i++)
+			{
+				Node u = userList.item(i);
+				if (u.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Element uElement = (Element) u;
+					try {
+						NodeList feedNL = ((Element) uElement.getElementsByTagName("feed").item(0))
+								.getElementsByTagName("event");
+						NodeList followingNL = ((Element) uElement.getElementsByTagName("following").item(0))
+								.getElementsByTagName("username");
+						Event[] events = new Event[feedNL.getLength()];
+						users = new User[followingNL.getLength()];
+						for (int j = 0; j < feedNL.getLength(); j++) // this is to populate the Following array
+						{
+							if (feedNL.item(j).getNodeType() == Node.ELEMENT_NODE) {
+								Element eElement = (Element) feedNL.item(j);
+								events[j] = new Event(eElement.getElementsByTagName("action").item(0).getTextContent(),
+										eElement.getElementsByTagName("movie").item(0).getTextContent(),
+										eElement.getElementsByTagName("rating").item(0).getTextContent());
+							}
+						}
+						for (int j = 0; j < followingNL.getLength(); j++) // this is to populate the Following array
+						{	
+							users[j] = getUserByUsername(followingNL.item(0).getTextContent());
+						}
+					} catch (NullPointerException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public User getUserByUsername(String username) {
+		for (int i = 0; i < users.length; i++) {
+			System.out.println(users[i].fname);
+		}			
+		for (int i = 0; i < users.length; i++) {
+			if (users[i].username.equals(username))
+					return users[i];
+		}
+		
+		return null;
+	}
+	
+
+}

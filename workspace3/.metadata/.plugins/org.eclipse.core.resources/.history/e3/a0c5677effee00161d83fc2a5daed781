@@ -1,0 +1,44 @@
+package dkawalsk_CSCI201L_Lecture_02_09_2017;
+
+public class ThreadTest {
+
+	public static void main(String args[]) {
+		System.out.println("Starting main method");
+		MyThread mt1 = new MyThread("A");
+		MyThread mt2 = new MyThread("B");
+		MyThread mt3 = new MyThread("C");
+		mt1.start();
+		mt2.start();
+		mt3.start();
+		try {
+			mt1.join();
+			mt2.join(); // guarantee that Ending main method is printed after B0...B19 completes
+			mt3.join(); // join() takes two threads and puts them together... not happening at the same time anymore. 
+		} catch (InterruptedException ie) {
+			System.out.println("ie: " + ie.getMessage());
+		}
+		System.out.println("Ending main method");
+	}
+}
+
+class MyThread extends Thread {
+	private String name;
+
+	public MyThread(String name) {
+		this.name = name;
+	}
+
+	public void run() {
+		try {
+			for (int i = 0; i < 20; i++) {
+				System.out.print(name + i + " ");
+				//Thread.sleep(500);
+			}
+			System.out.println();
+		} catch (InterruptedException ie) {
+			System.out.println("ie: " + ie.getMessage());
+		}
+
+	}
+
+}

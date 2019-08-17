@@ -1,0 +1,21 @@
+-=- CSCI Assignment 2 TODO -=-
+
+- Error Checking
+	- Front-end communicates with the backend to check whether usernames/input files exist
+		- Build into the HTML so that errors are shown on the front-end
+	
+- Search Expansion
+	- 
+
+- XML new field
+	- 
+
+- Front-end creation
+	- 
+	- Login Page (page?)
+	- User Search Page (page?)
+	- Profile Page (page?)
+		- Feed Page (page?)
+	- Start Page (page?)
+	- Movie Page (page?)
+		- Movie Search Page (page?)

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form>
+		<td>Name: <input type="text" name="name-field"></td>
+		<td>Color: <input type="color" name="color"></td>
+	</form>
+</body>
+</html>

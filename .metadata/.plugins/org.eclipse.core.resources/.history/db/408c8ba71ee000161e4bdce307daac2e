@@ -1,0 +1,18 @@
+package DOM;
+
+public class User {
+
+	String username, password, fname, lname;
+	Event[] feed;
+	User[] following;
+	
+	public User (String u, String p, String f, String l, Event[] events, User[] users)
+	{
+		username = u;
+		password = p;
+		fname = f;
+		lname = l;
+		feed = events;
+		following = users;
+	}
+}

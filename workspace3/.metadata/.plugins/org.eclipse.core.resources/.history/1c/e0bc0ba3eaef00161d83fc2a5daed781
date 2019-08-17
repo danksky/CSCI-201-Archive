@@ -1,0 +1,47 @@
+package DOM;
+
+public class Event {
+	public String action, movie, rating;
+
+	public Event() {}
+	
+	public Event(String a, String m, String r)
+	{
+		action = a;
+		movie = m;
+		rating = r;
+	}
+	
+	public String toString() {
+		String star = this.getClass().getClassLoader().getResource("/resources/star21.png").toString();
+		String thumbsUp = this.getClass().getClassLoader().getResource("/resources/thumbs-up-right.png").toString();
+		String thumbsDown = this.getClass().getClassLoader().getResource("/resources/thumbs-down-right.png").toString();
+		String firstIconImgSrc = "", lastIconImgSrc = "";
+		
+		if (action.toLowerCase().equals("liked")) 
+			firstIconImgSrc = "<img src=\"https://openclipart.org/image/2400px/svg_to_png/192852/thumbs-up-right.png\" width=\"10\" height=\"10\" alt=\"asdf\" />";
+		if (action.toLowerCase().equals("disliked")) 
+			firstIconImgSrc = "<img src=\"https://img.clipartfest.com/495a4dee4b4f5819b894b6a2e3a12c9f_thumbs-down-clipart-thumbs-down_1860-2371.png\" width=\"10\" height=\"10\" alt=\"asdf\" />";
+		if (action.toLowerCase().equals("rated")) {
+			lastIconImgSrc = star;
+			if (stringIsInteger(rating)) {
+				int r = Integer.parseInt(rating);
+				System.out.println(r);
+				lastIconImgSrc = "";
+				for (int i = 0; i < r; i++) 
+					lastIconImgSrc += star;
+				lastIconImgSrc = "<img src=\"http://www.drodd.com/images15/star21.png\" width=\"10\" height=\"10\" alt=\"asdf\" />";
+			}
+		}
+
+		return firstIconImgSrc + " " + action + " " + movie + " " + rating + " " + lastIconImgSrc;
+	}
+	
+	public boolean stringIsInteger(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isDigit(s.charAt(i)))
+				return false;
+		}
+		return true;
+	}
+}

@@ -1,0 +1,45 @@
+package DOM;
+
+public class Event {
+	public String action, movie, rating;
+
+	public Event() {}
+	
+	public Event(String a, String m, String r)
+	{
+		action = a;
+		movie = m;
+		rating = r;
+	}
+	
+	public String toString() {
+		String star = this.getClass().getResource("star21.png").toString();
+		String thumbsUp = this.getClass().getResource("thumbs-up-right.png").toString();
+		String thumbsDown = this.getClass().getResource("thumbs-down-right.png").toString();
+		String firstIconImgSrc = "", lastIconImgSrc = "";
+		
+		if (action.toLowerCase().equals("liked")) 
+			firstIconImgSrc = thumbsUp;
+		if (action.toLowerCase().equals("disliked")) 
+			firstIconImgSrc = thumbsDown;
+		if (action.toLowerCase().equals("rated")) {
+			lastIconImgSrc = star;
+			if (stringIsInteger(rating)) {
+				int r = Integer.parseInt(rating);
+				lastIconImgSrc = "";
+				for (int i = 0; i < r; i++) {
+					lastIconImgSrc += star;
+				}
+			}
+		}
+		return firstIconImgSrc + " " + action + " " + movie + " " + rating + " " + lastIconImgSrc;
+	}
+	
+	public boolean stringIsInteger(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isDigit(s.charAt(i)))
+				return false;
+		}
+		return true;
+	}
+}

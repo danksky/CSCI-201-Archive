@@ -1,0 +1,26 @@
+# csci201assignment2
+Daniel Kawalsky
+SID: 6134163232
+CS201 Section: 30393
+
+12 February 2017
+
+Assignment 2
+
+The files associated with Assignment 2 are on this repo.
+
+Directories: The only subdirectories are /src, /bin, and /WebContent.
+
+Please follow comments in the code to see thought processes and the mechanics of each function.
+
+Beginning from inputFileEntry.jsp, the user can go through the Cinemate site by interacting with clickable and typeable input components. JAVA Servlets on the backend do basic authenti The database that Cinemate works from is provided by the user 
+
+input file:
+
+DOMParser.java: 
+XML-Parser that places XML info into Java simple variables and artificial objects like Movie, User, etc. 
+
+SocialMedia.java: 
+Remnant of Assignment1, providing a model sequence of the user experience in Cinemate. 
+
+If there are any questions or concerns about running or configuration, please contact dkawalsk@usc.edu :)

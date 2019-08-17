@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ColorTools.java&apos; to &apos;CSCI201Factory_Lab4/src/utilities&apos;&#x0A;- Original project: &apos;CSCI201Factory_Lab5_withExpansion&apos;&#x0A;- Destination element: &apos;CSCI201Factory_Lab4/src/utilities&apos;&#x0A;- Original element: &apos;utilities.ColorTools.java&apos;" description="Copy compilation unit" destination="=CSCI201Factory_Lab4/src&lt;utilities" element1="/src&lt;utilities{ColorTools.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1486587954657" units="1" version="1.0"/>
+</session>

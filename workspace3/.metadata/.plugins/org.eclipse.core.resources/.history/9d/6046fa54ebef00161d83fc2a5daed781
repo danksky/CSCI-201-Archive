@@ -1,0 +1,46 @@
+package DOM;
+
+public class Event {
+	public String action, movie, rating;
+
+	public Event() {}
+	
+	public Event(String a, String m, String r)
+	{
+		action = a;
+		movie = m;
+		rating = r;
+	}
+	
+	public String toString() {
+		String star = "<img src=\"http://www.drodd.com/images15/star21.png\" width=\"18\" height=\"18\" alt=\"asdf\" />";
+		String thumbsUp = "<img src=\"https://openclipart.org/image/2400px/svg_to_png/192852/thumbs-up-right.png\" width=\"18\" height=\"18\" alt=\"asdf\" />";
+		String thumbsDown = "<img src=\"https://img.clipartfest.com/495a4dee4b4f5819b894b6a2e3a12c9f_thumbs-down-clipart-thumbs-down_1860-2371.png\" width=\"18\" height=\"18\" alt=\"asdf\" />";
+		String firstIconImgSrc = "", lastIconImgSrc = "";
+		
+		if (action.toLowerCase().equals("liked")) 
+			firstIconImgSrc = thumbsUp;
+		if (action.toLowerCase().equals("disliked")) 
+			firstIconImgSrc = thumbsDown;
+		if (action.toLowerCase().equals("rated")) {
+			lastIconImgSrc = star;
+			if (stringIsInteger(rating)) {
+				int r = Integer.parseInt(rating);
+				System.out.println(r);
+				lastIconImgSrc = "";
+				for (int i = 0; i < r; i++) 
+					lastIconImgSrc += star;
+			}
+		}
+
+		return firstIconImgSrc + " " + action + " " + movie  + " " + lastIconImgSrc;
+	}
+	
+	public boolean stringIsInteger(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isDigit(s.charAt(i)))
+				return false;
+		}
+		return true;
+	}
+}

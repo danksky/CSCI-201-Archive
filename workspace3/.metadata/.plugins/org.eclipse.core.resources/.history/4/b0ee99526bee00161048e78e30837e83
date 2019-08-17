@@ -1,0 +1,11 @@
+
+RequestDispatcher.forward() vs HttpServletResponse.sendRedirect()
+
+RequestDispatcher.forward()
+- when we redirect using forward and we want to use same data in new resource
+- we can use request.setAttribute() as we have request object available.
+
+HttpServletResponse.sendRedirect()
+- we'd have to store data in session or pass along with url
+- not transparent
+- transfer to another resource or to a different domain or differeent server for "further processing"

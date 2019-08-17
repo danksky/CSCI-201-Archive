@@ -1,0 +1,6 @@
+12:19:41 **** Clean-only build of configuration Debug for project CS104 Messing Around ****
+make clean 
+make: *** No rule to make target `clean'.  Stop.
+
+12:19:44 Build Finished (took 2s.377ms)
+

@@ -1,0 +1,9 @@
+INDEX VERSION 1.3+/Users/danielkawalsky/Documents/workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+198833469.index
+3927879410.index
+3891802604.index
+587422707.index
+2542063366.index
+3421528707.index
+3393784884.index
+2153231953.index

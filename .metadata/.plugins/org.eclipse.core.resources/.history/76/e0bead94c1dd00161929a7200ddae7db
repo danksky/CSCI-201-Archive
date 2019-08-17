@@ -1,0 +1,10 @@
+import client.Constants;
+import client.FactoryObject;
+
+public class FactoryWall extends FactoryObject {
+	public static final long serialVersionUID = 1L;
+	
+	public FactoryWall(int x, int y) {
+		super(Constants.wallString, "Wall" + Constants.png, x, y);
+	}
+}

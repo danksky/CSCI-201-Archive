@@ -1,0 +1,2 @@
+
+RequestDispatcher.forward() vs HttpServletResponse.sendRedirect()

@@ -1,0 +1,13 @@
+package DOM;
+
+public class Event {
+	String action, rating;
+	Movie movie;
+	
+	public Event(String a, Movie m, String r)
+	{
+		action = a;
+		movie = m;
+		rating = r;
+	}
+}

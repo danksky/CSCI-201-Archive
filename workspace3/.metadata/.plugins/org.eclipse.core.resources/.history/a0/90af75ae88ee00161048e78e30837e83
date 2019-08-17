@@ -1,0 +1,63 @@
+package dkawalsk_CSCI201L_Assignment2;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class LoginServlet
+ */
+@WebServlet("/IFS")
+public class InputFileServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public InputFileServlet() {
+		super();
+		System.out.println("in construction");
+	}
+
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("in service");
+
+		// Take the string name of the input file.
+		String inputFileName = (String) request.getParameter("filenameinput");
+		System.out.println(inputFileName);
+
+//		HttpSession session = request.getSession(true);
+//		// Check that the file actually exists...
+//		if (null == getClass().getClassLoader().getResource(inputFileName)) {
+//			session.setAttribute("error", "This file name doesn't exist in the project directory!");
+//			response.sendRedirect("inputFileEntryError.jsp");
+//		} else {
+//			// redirect to the new login page
+//			session.setAttribute("inputfilename", inputFileName);
+//			session.setAttribute("inputfile", new File(getServletContext().getRealPath(inputFileName)));
+//			response.sendRedirect("login.jsp");
+//		}
+
+		 PrintWriter pw = response.getWriter();
+		 File f = new File(getServletContext().getRealPath(inputFileName));
+		 Scanner scanner = new Scanner(f);
+		 String text = scanner.useDelimiter("\\A").next();
+		 pw.print(text);
+		 pw.close();
+		 scanner.close();
+
+		//
+		// File f = new
+		// File(getClass().getClassLoader().getResource("start.html").getFile());
+	}
+}

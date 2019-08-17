@@ -1,0 +1,32 @@
+package dkawalsk_CSCI201L_Lecture_02_09_2017;
+
+public class ThreadTest {
+
+	public static void main(String args[]) {
+		System.out.println("Starting main method");
+		MyThread mt1 = new MyThread("A");
+		MyThread mt2 = new MyThread("A");
+		MyThread mt3 = new MyThread("A");
+		mt1.start();
+		mt2.start();
+		mt3.start();
+		System.out.println("Ending main method");
+	}
+
+}
+
+class MyThread extends Thread {
+	private String name;
+
+	public MyThread(String name) {
+		this.name = name;
+	}
+
+	public void run() {
+		for (int i = 0; i < 20; i++) {
+			System.out.print(name + i + " ");
+		}
+		System.out.println();
+	}
+
+}

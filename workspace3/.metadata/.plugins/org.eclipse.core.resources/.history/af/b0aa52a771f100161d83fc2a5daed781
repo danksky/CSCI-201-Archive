@@ -1,0 +1,351 @@
+package DOM;
+
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+import java.io.*;
+import java.util.ArrayList;
+
+/**
+ * 
+ * @author danielkawalsky
+ * 
+ *         DOMParser.java serves as an XML-parser class to wrap all the XML
+ *         information into Java data structures that can be used and
+ *         manipulated.
+ *
+ */
+public class DOMParser {
+	private static final String DATABASE_PASSES = "DATABASE_PASSES_CHECKS";
+	public String[] genres;
+	public String[] actions;
+	public Movie[] movies;
+	public User[] users;
+
+	public static File inputFile;
+	public static DocumentBuilderFactory factory;
+	public static DocumentBuilder builder;
+	public static StringBuilder xmlStringBuilder;
+	public static Document doc;
+	public static Element root;
+	public static NodeList genreNodeList;
+	public static NodeList actionNodeList;
+	public static NodeList movieNodeList;
+	public static NodeList userNodeList;
+
+	public DOMParser(File f) throws ParserConfigurationException, SAXException, IOException {
+		// Boilerplate XML parsing code from
+		// https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
+		factory = DocumentBuilderFactory.newInstance();
+		builder = factory.newDocumentBuilder();
+		xmlStringBuilder = new StringBuilder();
+		xmlStringBuilder.append("<?xml version=\"1.0\"?> <class> </class>");
+		doc = builder.parse(f);
+		root = doc.getDocumentElement();
+		genreNodeList = doc.getElementsByTagName("genres");
+		actionNodeList = doc.getElementsByTagName("actions");
+		movieNodeList = doc.getElementsByTagName("movies");
+		userNodeList = doc.getElementsByTagName("users");
+	}
+	
+	public DOMParser(String inputFileName) throws ParserConfigurationException, SAXException, IOException {
+		// Boilerplate XML parsing code from
+		// https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
+		inputFile = new File(inputFileName);
+		factory = DocumentBuilderFactory.newInstance();
+		builder = factory.newDocumentBuilder();
+		xmlStringBuilder = new StringBuilder();
+		xmlStringBuilder.append("<?xml version=\"1.0\"?> <class> </class>");
+		doc = builder.parse(inputFile);
+		root = doc.getDocumentElement();
+		genreNodeList = doc.getElementsByTagName("genres");
+		actionNodeList = doc.getElementsByTagName("actions");
+		movieNodeList = doc.getElementsByTagName("movies");
+		userNodeList = doc.getElementsByTagName("users");
+	}
+
+	public static void printValues() {
+		System.out.println("Root element: " + root.getNodeName());
+
+		Node genreNodeListNode = genreNodeList.item(0);
+		Node actionNodeListNode = actionNodeList.item(0);
+		Node movieNodeListNode = movieNodeList.item(0);
+		Node userNodeListNode = userNodeList.item(0);
+
+		if (genreNodeListNode.getNodeType() == Node.ELEMENT_NODE
+				&& actionNodeListNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element gWrapperElement = (Element) genreNodeListNode;
+			Element aWrapperElement = (Element) actionNodeListNode;
+			Element mWrapperElement = (Element) movieNodeListNode;
+			Element uWrapperElement = (Element) userNodeListNode;
+			NodeList genreList = gWrapperElement.getElementsByTagName("genre");
+			NodeList actionList = aWrapperElement.getElementsByTagName("action");
+			NodeList movieList = mWrapperElement.getElementsByTagName("movie");
+			NodeList userList = uWrapperElement.getElementsByTagName("user");
+			Node genre, action;
+
+			for (int i = 0; i < genreList.getLength(); i++) {
+				genre = genreList.item(i);
+				System.out.println(genre.getTextContent());
+			}
+			for (int i = 0; i < actionList.getLength(); i++) {
+				action = actionList.item(i);
+				System.out.println(action.getTextContent());
+			}
+			for (int i = 0; i < movieList.getLength(); i++) {
+				Node m = movieList.item(i);
+				if (m.getNodeType() == Node.ELEMENT_NODE) {
+					Element mElement = (Element) m;
+					NodeList movieWritersNL = mElement.getElementsByTagName("writer");
+					NodeList movieActorsNL = mElement.getElementsByTagName("actor");
+					for (int j = 0; j < movieWritersNL.getLength(); j++) // this
+																			// is
+																			// to
+																			// populate
+																			// the
+																			// writers
+																			// array
+						System.out.println(movieWritersNL.item(j).getTextContent());
+					for (int j = 0; j < movieActorsNL.getLength(); j++)
+						System.out.println(movieActorsNL.item(j).getTextContent());
+					System.out.println(mElement.getElementsByTagName("title").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("director").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("genre").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("year").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("description").item(0).getTextContent());
+					System.out.println(mElement.getElementsByTagName("rating").item(0).getTextContent());
+				}
+			}
+			for (int i = 0; i < userList.getLength(); i++) {
+				Node u = userList.item(i);
+				if (u.getNodeType() == Node.ELEMENT_NODE) {
+					Element uElement = (Element) u;
+					System.out.println(uElement.getElementsByTagName("fname").item(0).getTextContent() + " "
+							+ uElement.getElementsByTagName("lname").item(0).getTextContent());
+					try {
+						NodeList feedNL = ((Element) uElement.getElementsByTagName("feed").item(0))
+								.getElementsByTagName("event");
+						NodeList followingNL = ((Element) uElement.getElementsByTagName("following").item(0))
+								.getElementsByTagName("username");
+						for (int j = 0; j < feedNL.getLength(); j++) // this is
+																		// to
+																		// populate
+																		// the
+																		// Following
+																		// array
+						{
+							if (feedNL.item(j).getNodeType() == Node.ELEMENT_NODE) {
+								Element eElement = (Element) feedNL.item(j);
+								System.out.println(eElement.getElementsByTagName("action").item(0).getTextContent());
+								System.out.println(eElement.getElementsByTagName("movie").item(0).getTextContent());
+								System.out.println(eElement.getElementsByTagName("rating").item(0).getTextContent());
+							}
+						}
+						for (int j = 0; j < followingNL.getLength(); j++) // this
+																			// is
+																			// to
+																			// populate
+																			// the
+																			// Following
+																			// array
+						{
+							System.out.println(followingNL.item(j).getTextContent());
+						}
+					} catch (NullPointerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public void instantiateValues() {
+		Node genreNodeListNode = genreNodeList.item(0);
+		Node actionNodeListNode = actionNodeList.item(0);
+		Node movieNodeListNode = movieNodeList.item(0);
+		Node userNodeListNode = userNodeList.item(0);
+
+		if (genreNodeListNode.getNodeType() == Node.ELEMENT_NODE
+				&& actionNodeListNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element gWrapperElement = (Element) genreNodeListNode;
+			Element aWrapperElement = (Element) actionNodeListNode;
+			Element mWrapperElement = (Element) movieNodeListNode;
+			Element uWrapperElement = (Element) userNodeListNode;
+			NodeList genreList = gWrapperElement.getElementsByTagName("genre");
+			NodeList actionList = aWrapperElement.getElementsByTagName("action");
+			NodeList movieList = mWrapperElement.getElementsByTagName("movie");
+			NodeList userList = uWrapperElement.getElementsByTagName("user");
+
+			genres = new String[genreList.getLength()];
+			actions = new String[actionList.getLength()];
+			movies = new Movie[movieList.getLength()];
+			users = new User[userList.getLength()];
+
+			for (int i = 0; i < genreList.getLength(); i++) {
+				genres[i] = genreList.item(i).getTextContent();
+			}
+			for (int i = 0; i < actionList.getLength(); i++) {
+				actions[i] = actionList.item(i).getTextContent();
+			}
+			for (int i = 0; i < movieList.getLength(); i++) {
+				Node m = movieList.item(i);
+				if (m.getNodeType() == Node.ELEMENT_NODE) {
+					Element mElement = (Element) m;
+					NodeList movieWritersNL = mElement.getElementsByTagName("writer");
+					NodeList movieActorsNL = mElement.getElementsByTagName("actor");
+					String[] writers = new String[movieWritersNL.getLength()];
+					String[] actors = new String[movieActorsNL.getLength()];
+					for (int j = 0; j < movieWritersNL.getLength(); j++) // this
+																			// is
+																			// to
+																			// populate
+																			// the
+																			// writers
+																			// array
+						writers[j] = movieWritersNL.item(j).getTextContent();
+					for (int j = 0; j < movieActorsNL.getLength(); j++)
+						actors[j] = movieActorsNL.item(j).getTextContent();
+					movies[i] = new Movie(mElement.getElementsByTagName("title").item(0).getTextContent(),
+							mElement.getElementsByTagName("director").item(0).getTextContent(),
+							mElement.getElementsByTagName("genre").item(0).getTextContent(),
+							mElement.getElementsByTagName("year").item(0).getTextContent(),
+							mElement.getElementsByTagName("description").item(0).getTextContent(),
+							mElement.getElementsByTagName("rating").item(0).getTextContent(), writers, actors);
+				}
+			}
+
+			for (int i = 0; i < userList.getLength(); i++) {
+				Node u = userList.item(i);
+				if (u.getNodeType() == Node.ELEMENT_NODE) {
+					Element uElement = (Element) u;
+					try {
+						NodeList feedNL = ((Element) uElement.getElementsByTagName("feed").item(0))
+								.getElementsByTagName("event");
+						NodeList followingNL = ((Element) uElement.getElementsByTagName("following").item(0))
+								.getElementsByTagName("username");
+						Event[] events = new Event[feedNL.getLength()];
+						String[] following = new String[followingNL.getLength()];
+						for (int j = 0; j < feedNL.getLength(); j++) // this is
+																		// to
+																		// populate
+																		// the
+																		// Following
+																		// array
+						{
+							if (feedNL.item(j).getNodeType() == Node.ELEMENT_NODE) {
+								Element eElement = (Element) feedNL.item(j);
+								events[j] = new Event(eElement.getElementsByTagName("action").item(0).getTextContent(),
+										eElement.getElementsByTagName("movie").item(0).getTextContent(),
+										eElement.getElementsByTagName("rating").item(0).getTextContent());
+							}
+						}
+						for (int j = 0; j < followingNL.getLength(); j++) // this
+																			// is
+																			// to
+																			// populate
+																			// the
+																			// Following
+																			// array
+						{
+							following[j] = followingNL.item(j).getTextContent();
+						}
+						users[i] = new User(uElement.getElementsByTagName("username").item(0).getTextContent(),
+								uElement.getElementsByTagName("password").item(0).getTextContent(),
+								uElement.getElementsByTagName("fname").item(0).getTextContent(),
+								uElement.getElementsByTagName("lname").item(0).getTextContent(), 
+								uElement.getElementsByTagName("image").item(0).getTextContent(),
+								events, following);
+					} catch (NullPointerException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public User getUserByUsername(String username) {
+		for (int i = 0; i < users.length; i++) {
+			if (users[i].username.toLowerCase().equals(username.toLowerCase())) {
+				return users[i];
+			}
+		}
+
+		return null;
+	}
+	
+	public String[] getFollowersForUser(User u) {
+		ArrayList<String> userAL = new ArrayList<>();
+		for (int i = 0; i < users.length; i++) {
+			for (int j =0; j < users[i].following.length; j++) {
+				if (users[i].following[j].equals(u.username)) {
+					userAL.add(users[i].username);
+				}
+			}
+		}
+		String[] followers = new String[userAL.size()];
+		return userAL.toArray(followers);
+	}
+	
+
+	public String check() {
+		if (movies.length == 0) {
+			return "Error: There are no movies listed under the <movies> tag.";
+		}
+			
+		
+		for (int i = 0; i < users.length; i++) {
+			for (int j = 0; j < users[i].feed.length; j++) {
+
+				// Rating action but empty rating field
+				// https://piazza.com/class/ixpjphtpy897i6?cid=60
+				if (users[i].feed[j].action.equals("Rated") && users[i].feed[j].rating.equals("")) {
+					return "Error: " + users[i].fname + " " + users[i].lname + " rated \'"
+							+ users[i].feed[j].movie + "\' but didn't provide numeric value.\n";
+				}
+
+				// Rating field filled but no rating action
+				if (!users[i].feed[j].rating.equals("") && !users[i].feed[j].action.equals("Rated")) {
+					return "Error: " + users[i].fname + " " + users[i].lname + " rated \'"
+							+ users[i].feed[j].movie + "\' but feed action doesn't reflect that.\n";
+				}
+				
+				if (!stringIsInteger(users[i].feed[j].rating)) {
+					return "Error: " + users[i].fname + " " + users[i].lname + " rated \'"
+							+ users[i].feed[j].movie + "\' but the value isn't numeric.\n";
+				}
+				
+				boolean found = false;
+				for (int k = 0; k < actions.length; k++) {
+					if (users[i].feed[j].action.equals(actions[k]))
+						found = true;
+				}
+				if (!found) {
+					return "Error: " + users[i].fname + " " + users[i].lname 
+							+ " performed an action \'" + users[i].feed[j].action + "\' that isn't listed.";
+				}
+			}
+			for (int j = 0; j < users[i].following.length; j++) {
+				boolean found = false;
+				for (int k = 0; k < users.length; k++) {
+					if (users[i].following[j].equals(users[k].username))
+						found = true;
+				}
+				if (!found) {
+					return "Error: " + users[i].fname + " " + users[i].lname + " is following a username \'"
+							+ users[i].following[j] + "\' that doesn't exist.";
+				}
+			}
+		}
+		
+		return this.DATABASE_PASSES;
+	}
+	
+	public boolean stringIsInteger(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isDigit(s.charAt(i)))
+				return false;
+		}
+		return true;
+	}
+}
